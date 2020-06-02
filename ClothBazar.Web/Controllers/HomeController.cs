@@ -18,7 +18,7 @@ namespace ClothBazar.Web.Controllers
 
             return View(model);
         }
-        //[Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult AdminPanel()
         {
             return View();

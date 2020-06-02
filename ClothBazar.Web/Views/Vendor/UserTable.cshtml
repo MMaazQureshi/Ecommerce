@@ -1,0 +1,271 @@
+﻿@using ClothBazar.Web.Models;
+
+@model VendorSearchViewModel
+@{
+    ViewBag.Title = "UserTable";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+<div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Search</label>
+                    <input class="form-control" id="searchTxt" name="Search" value="@Model.SearchTerm" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Action</label>
+                    <div class="row">
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="searchBtn">Search</button>
+                        </div>
+                        <div class="col-md-4 pr-0">
+                            <button class="btn btn-primary form-control" type="button" id="resetBtn">Reset</button>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <table id="ProductsTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th class="font-weight-bold">User Name</th>
+                <th class="font-weight-bold">Email Address</th>
+                <th class="font-weight-bold">City</th>
+                <th class="font-weight-bold wrap-td">Town</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Vendors != null && Model.Vendors.Count > 0)
+            {
+
+                foreach (var Vendor in Model.Vendors)
+                {
+            <tr>
+                <td>@Vendor.Name</td>
+                @if (Vendor.Email != null)
+                {
+                    <td>
+                        @Vendor.Email
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        N/A
+                    </td>
+
+                }
+                @if (Vendor.City != null)
+                {
+                    <td>
+                        @Vendor.City
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        N/A
+                    </td>
+
+                }
+
+                @if (Vendor.Town != null)
+                {
+                    <td>@Vendor.Town</td>
+
+                }
+                else
+                {
+                    <td>
+                        N/A
+                    </td>
+
+                }
+
+
+                <td class="wrap-td">
+                    <button class="editBtn" data-id="@Vendor.Id">Edit</button>
+                    <button class="deleteBtn" data-id="@Vendor.Id">Delete</button>
+                    
+                </td>
+            </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-danger" colspan="4">No Products found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div>
+        @if (Model.Pager != null && Model.Pager.TotalPages > 1)
+        {
+
+            if (Model.Pager.CurrentPage > 1)
+            {
+                <button class="pageButtons" data-pageno="1">First</button>
+                <button class="pageButtons" data-pageno="@(Model.Pager.CurrentPage - 1)">Previous</button>
+            }
+
+            for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
+
+                <button class="@activeClass pageButtons" data-pageno="@page">@page</button>
+            }
+
+            if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <button class="pageButtons" data-pageno="@(Model.Pager.CurrentPage + 1)">Next</button>
+                <button class="pageButtons" data-pageno="@Model.Pager.EndPage">Last</button>
+            }
+        }
+    </div>
+</div>
+<script>
+
+	$(".pageButtons").click(function () {
+		$.ajax({
+			url: '@Url.Action("UserTable", "Vendor")',
+			data: {
+				pageNo : $(this).attr("data-pageno")
+			}
+		})
+        .done(function (response) {
+        	$("#tableContiner").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
+	$("#searchBtn").click(function () {
+		var searchValue = $("#searchTxt").val();
+
+		$.ajax({
+			url: '@Url.Action("UserTable", "Vendor")',
+			data: {
+				search: searchValue
+			}
+		})
+        .done(function (response) {
+        	$("#tableContiner").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
+	$("#resetBtn").click(function () {
+		var searchValue = '';
+
+		$.ajax({
+			url: '@Url.Action("UserTable", "Vendor")',
+			data: {
+				search: searchValue
+			}
+		})
+        .done(function (response) {
+        	$("#tableContiner").html(response);
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
+	$("#newBtn").click(function () {
+		$.ajax({
+			url: '@Url.Action("Create", "Vendor")',
+		})
+        .done(function (response) {
+        	$("#actionContainer").html(response);
+
+        	focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
+	$(".editBtn").click(function () {
+		$.ajax({
+			url: '@Url.Action("Edit", "Vendor")',
+			data: {
+				ID: $(this).attr('data-id')
+			}
+		})
+        .done(function (response) {
+        	$("#actionContainer").html(response);
+
+        	focusAction("actionContainer");
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+
+	$(".deleteBtn").click(function () {
+
+		swal({
+			title: "Confirm?",
+			text: "Are you sure you want to delete this Vendor?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				$.ajax({
+					type: 'POST',
+					url: '@Url.Action("Delete", "Vendor")',
+					data: {
+						ID: $(this).attr('data-id')
+					}
+				})
+				.done(function (response) {
+					$("#tableContiner").html(response);
+
+					swal("Record deleted Successfully.", {
+						icon: "success",
+					});
+				})
+				.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("FAIL");
+				});
+
+			}
+		});
+
+		//var confirmDelete = confirm("Are you sure you want to delete this product?");
+
+		//if (confirmDelete)
+		//{
+		//	$.ajax({
+		//		type: 'POST',
+		//		url: '/Product/Delete',
+		//		data: {
+		//			ID: $(this).attr('data-id')
+		//		}
+		//	})
+		//	.done(function (response) {
+		//		$("#tableContiner").html(response);
+		//	})
+		//	.fail(function (XMLHttpRequest, textStatus, errorThrown) {
+		//		alert("FAIL");
+		//	});
+		//}
+	});
+
+
+</script>

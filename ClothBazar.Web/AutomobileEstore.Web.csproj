@@ -78,6 +78,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -207,6 +213,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\ShopController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,10 +226,15 @@
     <Compile Include="Migrations\201809171445309_AddedNewPropertiesToUser.Designer.cs">
       <DependentUpon>201809171445309_AddedNewPropertiesToUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002181222301_AddTownAndCityToApplicationUser.cs" />
+    <Compile Include="Migrations\202002181222301_AddTownAndCityToApplicationUser.Designer.cs">
+      <DependentUpon>202002181222301_AddTownAndCityToApplicationUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\VendorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CategoryViewModels.cs" />
@@ -471,6 +483,7 @@
     <Content Include="Content\images\tester.jpg" />
     <Content Include="Content\images\wordpress-version.png" />
     <Content Include="Content\javascript\main.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -481,6 +494,7 @@
     </Content>
     <Content Include="Content\images\.DS_Store" />
     <Content Include="Content\images\shop\.DS_Store" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -546,6 +560,13 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Home\AdminPanel.cshtml" />
+    <Content Include="Views\Account\RegisterAs.cshtml" />
+    <Content Include="Views\Account\RegisterAsVendor.cshtml" />
+    <Content Include="Views\Account\RegisterAsBuyer.cshtml" />
+    <Content Include="Views\Vendor\GetVendorByLocation.cshtml" />
+    <Content Include="Views\Vendor\UserTable.cshtml" />
+    <Content Include="Views\Vendor\Edit.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -554,6 +575,7 @@
     <Folder Include="Content\images\about\" />
     <Folder Include="Content\rev-slider\" />
     <Folder Include="Content\stylesheets\" />
+    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -564,13 +586,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClothBazar.Entities\ClothBazar.Entities.csproj">
+    <ProjectReference Include="..\ClothBazar.Entities\AutomobileEstore.Entities.csproj">
       <Project>{AF738F58-DCFF-46D7-A882-C02E413713DB}</Project>
-      <Name>ClothBazar.Entities</Name>
+      <Name>AutomobileEstore.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ClothBazar.Services\ClothBazar.Services.csproj">
+    <ProjectReference Include="..\ClothBazar.Services\AutomobileEstore.Services.csproj">
       <Project>{9500F205-6B7C-4FE3-8233-2C8FBFC6B551}</Project>
-      <Name>ClothBazar.Services</Name>
+      <Name>AutomobileEstore.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -579,6 +601,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809171445309_AddedNewPropertiesToUser.resx">
       <DependentUpon>201809171445309_AddedNewPropertiesToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002181222301_AddTownAndCityToApplicationUser.resx">
+      <DependentUpon>202002181222301_AddTownAndCityToApplicationUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

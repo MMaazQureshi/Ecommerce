@@ -1,0 +1,81 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList<ClothBazar.Web.Models.VendorViewModel>
+
+@{
+                /**/
+
+                ViewBag.Title = "GetVendorByLocation";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{int stars = 5; }
+<section class="flat-row shop-detail-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="flat-tabs style-1 has-border">
+                    <div class="inner">
+                        <ul class="menu-tab">
+                            <li class="active">Vendors</li>
+                        </ul>
+                        <div class="content-tab">
+                            <div class="content-inner">
+                                <div class="inner max-width-83 padding-top-33">
+                                    @if (Model.Count == 0)
+                                    {
+                                        <h2>No Vendor found in the searched location</h2>
+                                    }
+                                    else
+                                    {<ol class="review-list">
+
+                                            @foreach (var vendor in Model)
+                                            {
+                                                <li class="review">
+
+                                                    <div class="thumb">
+                                                        <img src="~/content/images/placeholder.png" alt="Image">
+                                                    </div>
+                                                    <div class="text-wrap">
+                                                        <div class="review-meta">
+                                                            <h5 class="name">@vendor.VendorName</h5>
+                                                            <p>@vendor.Address</p>
+                                                            <p>@vendor.City</p>
+                                                            <div class="flat-star style-1" style="position:relative;">
+
+                                                                @for (int i = 1; i < stars; i++)
+                                                                {
+                                                                    <i class="fa fa-star"></i>
+
+                                                                }
+                                                                <i class="fa fa-star-half-o"></i>
+
+
+                                                                @{ stars = stars - 1;}
+                                                                @for (int j = 5; j > stars + 1; j--)
+                                                                {
+                                                                    <i class="fa fa-star-o"></i>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="review-text">
+                                                            <p>@vendor.Email</p>
+                                                        </div>
+                                                    </div>
+                                                    <!--  /.review    -->
+                                                </li>
+                                            }
+
+
+                                        </ol><!-- /.review-list -->
+                                    }<!-- /.comment-respond -->
+                                </div>
+                            </div><!-- /.content-inner -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

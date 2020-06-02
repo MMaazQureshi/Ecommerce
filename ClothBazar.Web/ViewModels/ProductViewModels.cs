@@ -1,4 +1,5 @@
 ﻿using ClothBazar.Entities;
+using ClothBazar.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Web;
 
 namespace ClothBazar.Web.ViewModels
 {
+    
     public class ProductSearchViewModel
     {
         public List<Product> Products { get; set; }
@@ -21,7 +23,7 @@ namespace ClothBazar.Web.ViewModels
         public decimal Price { get; set; }
         public int CategoryID { get; set; }
         public string ImageURL { get; set; }
-
+        public string Vendor { get; set; }
         public List<Category> AvailableCategories { get; set; }
     }
 
@@ -42,5 +44,6 @@ namespace ClothBazar.Web.ViewModels
     public class ProductViewModel
     {
         public Product Product { get; set; }
+        public  string VendorName {get; set;}
     }
 }

@@ -57,13 +57,13 @@
     <Compile Include="ShopService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClothBazar.Database\ClothBazar.Database.csproj">
+    <ProjectReference Include="..\ClothBazar.Database\AutomobileEstore.Database.csproj">
       <Project>{daaad1b5-4409-4f0e-96c8-271c432ce211}</Project>
-      <Name>ClothBazar.Database</Name>
+      <Name>AutomobileEstore.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ClothBazar.Entities\ClothBazar.Entities.csproj">
+    <ProjectReference Include="..\ClothBazar.Entities\AutomobileEstore.Entities.csproj">
       <Project>{AF738F58-DCFF-46D7-A882-C02E413713DB}</Project>
-      <Name>ClothBazar.Entities</Name>
+      <Name>AutomobileEstore.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

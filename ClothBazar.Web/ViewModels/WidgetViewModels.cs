@@ -8,7 +8,7 @@ namespace ClothBazar.Web.ViewModels
 {
     public class ProductsWidgetViewModel
     {
-        public List<Product> Products { get; set; }
+        public List<ProductViewModel> Products { get; set; }
 
         public bool IsLatestProducts { get; set; }
     }

@@ -87,8 +87,14 @@ namespace ClothBazar.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        
+        [Display(Name = "Town")]
+        public string Town { get; set; }
+        
+        [Display(Name = "City")]
+        public string City { get; set; }
     }
-
+    
     public class ResetPasswordViewModel
     {
         [Required]
@@ -109,6 +115,21 @@ namespace ClothBazar.Web.Models
 
         public string Code { get; set; }
     }
+    public class UserViewModel
+    {
+        public string SearchTerm { get; set; }
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Required]
+        public string Id{ get; set; }
+        [Required]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        public string Role { get; set; }
+
+    }
 
     public class ForgotPasswordViewModel
     {
@@ -116,5 +137,6 @@ namespace ClothBazar.Web.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+             
     }
 }

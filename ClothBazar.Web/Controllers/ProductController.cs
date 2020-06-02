@@ -6,17 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace ClothBazar.Web.Controllers
 {
     public class ProductController : Controller
     {
         // GET: Product
+        
+        [Authorize(Roles = "Admin,Vendor")]
         public ActionResult Index()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
+        
         public ActionResult ProductTable(string search, int? pageNo)
         {
             var pageSize = ConfigurationsService.Instance.PageSize();
@@ -32,6 +36,22 @@ namespace ClothBazar.Web.Controllers
             model.Pager = new Pager(totalRecords, pageNo, pageSize);
 
             return PartialView(model);
+        }
+        public ActionResult ProductTableForVendor(string search, int? pageNo)
+        {
+            var pageSize = ConfigurationsService.Instance.PageSize();
+
+            ProductSearchViewModel model = new ProductSearchViewModel();
+            model.SearchTerm = search;
+
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+
+            var totalRecords = ProductsService.Instance.GetProductsCount(search);
+            model.Products = ProductsService.Instance.GetProducts(search, pageNo.Value, pageSize).Where(x=>x.Vendor== User.Identity.GetUserId()).ToList();
+
+            model.Pager = new Pager(totalRecords, pageNo, pageSize);
+
+            return PartialView("ProductTable", model);
         }
 
         [HttpGet]
@@ -53,9 +73,17 @@ namespace ClothBazar.Web.Controllers
             newProduct.Price = model.Price;
             newProduct.Category = CategoriesService.Instance.GetCategory(model.CategoryID);
             newProduct.ImageURL = model.ImageURL;
+            newProduct.Vendor = User.Identity.GetUserId();
 
             ProductsService.Instance.SaveProduct(newProduct);
-            return RedirectToAction("ProductTable");            
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ProductTable");
+            }
+            else
+            {
+                return RedirectToAction("ProductTableForVendor");
+            }
         }
 
         [HttpGet]
@@ -96,7 +124,14 @@ namespace ClothBazar.Web.Controllers
 
             ProductsService.Instance.UpdateProduct(existingProduct);
 
-            return RedirectToAction("ProductTable");
+            if(User.IsInRole("Admin"))
+            {
+                return RedirectToAction("ProductTable");
+            }
+            else
+            {
+                return RedirectToAction("ProductTableForVendor");
+            }
         }
         
         [HttpPost]

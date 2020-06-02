@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Web", "ClothBazar.Web\ClothBazar.Web.csproj", "{8B844920-45BB-41EC-8339-7EA9B1D09CDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileEstore.Web", "ClothBazar.Web\AutomobileEstore.Web.csproj", "{8B844920-45BB-41EC-8339-7EA9B1D09CDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Entities", "ClothBazar.Entities\ClothBazar.Entities.csproj", "{AF738F58-DCFF-46D7-A882-C02E413713DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileEstore.Entities", "ClothBazar.Entities\AutomobileEstore.Entities.csproj", "{AF738F58-DCFF-46D7-A882-C02E413713DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Database", "ClothBazar.Database\ClothBazar.Database.csproj", "{DAAAD1B5-4409-4F0E-96C8-271C432CE211}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileEstore.Database", "ClothBazar.Database\AutomobileEstore.Database.csproj", "{DAAAD1B5-4409-4F0E-96C8-271C432CE211}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClothBazar.Services", "ClothBazar.Services\ClothBazar.Services.csproj", "{9500F205-6B7C-4FE3-8233-2C8FBFC6B551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomobileEstore.Services", "ClothBazar.Services\AutomobileEstore.Services.csproj", "{9500F205-6B7C-4FE3-8233-2C8FBFC6B551}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78844A8E-CBA3-456E-932D-2F9D2DCF958C}
 	EndGlobalSection
 EndGlobal

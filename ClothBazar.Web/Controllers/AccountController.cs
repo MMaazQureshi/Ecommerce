@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ClothBazar.Web.Models;
+using System.Collections.Generic;
 
 namespace ClothBazar.Web.Controllers
 {
@@ -17,7 +18,7 @@ namespace ClothBazar.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        //private ApplicationDbContext context;
         public AccountController()
         {
         }
@@ -27,6 +28,27 @@ namespace ClothBazar.Web.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
+        //public List<UserViewModel> GetAllVendors()
+        //{
+        //    //getting all vendors
+        //    var Vendors = context.Roles.Where(x=>x.Id=="2").FirstOrDefault();
+
+        //    var VendorUsers = Vendors.Users;
+        //    List<UserViewModel> usersVMList = new List<UserViewModel>();
+        //    foreach (var vendor in VendorUsers)
+        //    {
+
+        //        var User = context.Users.Where(x => x.Id == vendor.UserId).FirstOrDefault();
+        //        var userViewModel = new UserViewModel
+        //        {
+        //            Id = User.Id,
+        //            Email = User.Email,
+        //            Role = "Vendor",
+        //        };
+        //        usersVMList.Add(userViewModel);
+        //}
+        //    return usersVMList;
+        //}
 
         public ApplicationSignInManager SignInManager
         {
@@ -59,6 +81,12 @@ namespace ClothBazar.Web.Controllers
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+        }
+        public ActionResult Logout()
+        {
+            var AuthenticationManager = HttpContext.GetOwinContext().Authentication;
+            AuthenticationManager.SignOut();
+            return View("Login");
         }
 
         //
@@ -141,6 +169,80 @@ namespace ClothBazar.Web.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
+        public ActionResult RegisterAs()
+        {
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult RegisterAsVendor()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterAsVendor(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address ,City= model.City,Town= model.Town};
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "Vendor ");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        [AllowAnonymous]
+        public ActionResult RegisterAsBuyer()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterAsBuyer(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, "Buyer");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+       
 
         //
         // POST: /Account/Register
@@ -151,11 +253,12 @@ namespace ClothBazar.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address };
-
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.Name, Address = model.Address,City = model.City,Town=model.Town };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id,"Admin");
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

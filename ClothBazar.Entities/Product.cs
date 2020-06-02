@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ClothBazar.Entities
 {
     public class Product : BaseEntity
@@ -16,5 +15,8 @@ namespace ClothBazar.Entities
         public virtual Category Category { get; set; }
 
         public string ImageURL { get; set; }
+
+        public string Vendor { get; set; }
+        
     }
 }

@@ -37,11 +37,15 @@ namespace ClothBazar.Web.Controllers
                 _userManager = value;
             }
         }
-
         // GET: Order
+        
         public ActionResult Index(string userID, string status, int? pageNo)
         {
-            OrdersViewModel model = new OrdersViewModel();
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("IndexForVendors");
+            }
+                OrdersViewModel model = new OrdersViewModel();
             model.UserID = userID;
             model.Status = status;
 
@@ -54,6 +58,22 @@ namespace ClothBazar.Web.Controllers
             model.Pager = new Pager(totalRecords, pageNo, pageSize);
 
             return View(model);
+        }
+        public ActionResult IndexForVendors(string userID, string status, int? pageNo)
+        {
+            OrdersViewModel model = new OrdersViewModel();
+            model.UserID = userID;
+            model.Status = status;
+
+            pageNo = pageNo.HasValue ? pageNo.Value > 0 ? pageNo.Value : 1 : 1;
+            var pageSize = ConfigurationsService.Instance.PageSize();
+
+            model.Orders = OrdersService.Instance.SearchOrdersForVendors(userID, status, pageNo.Value, pageSize);
+            var totalRecords = OrdersService.Instance.SearchOrdersCount(userID, status);
+
+            model.Pager = new Pager(totalRecords, pageNo, pageSize);
+
+            return View("index",model);
         }
 
         public ActionResult Details(int ID)

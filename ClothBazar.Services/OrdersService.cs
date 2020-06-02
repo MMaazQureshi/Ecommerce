@@ -48,6 +48,26 @@ namespace ClothBazar.Services
                 return orders.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
             }
         }
+
+        public List<Order> SearchOrdersForVendors(string userID, string status, int pageNo, int pageSize)
+        {
+            using (var context = new CBContext())
+            {
+                var orders = context.Orders.ToList();
+
+                if (!string.IsNullOrEmpty(userID))
+                {
+                    orders = orders.Where(x => x.UserID.ToLower().Contains(userID.ToLower())).ToList();
+                }
+
+                if (!string.IsNullOrEmpty(status))
+                {
+                    orders = orders.Where(x => x.Status.ToLower().Contains(status.ToLower())).ToList();
+                }
+
+                return orders.Skip((pageNo - 1) * pageSize).Take(pageSize).ToList();
+            }
+        }
         public int SearchOrdersCount(string userID, string status)
         {
             using (var context = new CBContext())

@@ -86,17 +86,23 @@
     <Compile Include="Migrations\201809181437232_AddedQuantityInOrderItems.Designer.cs">
       <DependentUpon>201809181437232_AddedQuantityInOrderItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002111401273_addedVendorproperty.cs" />
+    <Compile Include="Migrations\202002111401273_addedVendorproperty.Designer.cs">
+      <DependentUpon>202002111401273_addedVendorproperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClothBazar.Entities\ClothBazar.Entities.csproj">
+    <ProjectReference Include="..\ClothBazar.Entities\AutomobileEstore.Entities.csproj">
       <Project>{af738f58-dcff-46d7-a882-c02e413713db}</Project>
-      <Name>ClothBazar.Entities</Name>
+      <Name>AutomobileEstore.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809181437232_AddedQuantityInOrderItems.resx">
       <DependentUpon>201809181437232_AddedQuantityInOrderItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002111401273_addedVendorproperty.resx">
+      <DependentUpon>202002111401273_addedVendorproperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
