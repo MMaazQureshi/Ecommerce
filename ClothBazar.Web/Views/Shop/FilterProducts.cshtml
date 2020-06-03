@@ -1,9 +1,21 @@
 ﻿@model FilterProductsViewModel
 
-@{ 
+@{
 
 	var defaultImageURL = "/Content/images/system/placeholder-image.png";
+    
 }
+    <style>
+
+
+        .product.style2 .product-item .like {
+            font-size: 14px;
+            line-height: 26px;
+            top: 420px;
+            right: 135px;
+        }
+											
+    </style>
 <div class="filter-shop clearfix">
 	<p class="showing-product float-right">
 		Showing @(((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + 1 ) – @(((Model.Pager.CurrentPage - 1) * Model.Pager.PageSize) + (Model.Products.Count < Model.Pager.PageSize ? Model.Products.Count : Model.Pager.PageSize)) of @Model.Pager.TotalItems Products
