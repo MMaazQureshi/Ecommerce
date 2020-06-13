@@ -76,7 +76,7 @@
                         }*@
 
                         <li class="box-cart nav-top-cart-wrapper">
-                            <a href="#" class="like"><i class="fa fa-heart-o"></i></a>
+                            <a href="@Url.Action("Index","WishList")" class="like"><i class="fa fa-heart-o"></i></a>
                         </li>
 
                         <li class="box-login box-cart nav-top-cart-wrapper">
@@ -107,12 +107,17 @@
                                 <li>
                                     <a href="@Url.Action("Index", "Home")">HOME</a>
                                 </li>
-                                <li>
-                                    <a href="@Url.Action("Index", "Shop")">SHOP</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Checkout", "Shop")">CHECKOUT</a>
-                                </li>
+                                @if (!User.IsInRole("Vendor"))
+                                {
+                                    <li>
+                                        <a href="@Url.Action("Index", "Shop")">SHOP</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Checkout", "Shop")">CHECKOUT</a>
+                                    </li>
+                                }
+
+
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <li><a href="@Url.Action("AdminPanel","Home")">Admin Panel</a></li>
@@ -139,7 +144,7 @@
                     <div id="searchLocation" style="display:none;">
                         @using (Html.BeginForm("GetVendorByLocation", "Vendor"))
                         {
-                            <input type="text" name="location" style="width: auto;margin-left: 53.5em" />
+                            <input type="text" name="location" class="search-mechanics" style="width: auto; margin:0 0 0 55em" />
                             <input id="Button1" type="submit" value="Search" />
                         }
                 </div>

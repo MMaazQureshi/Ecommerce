@@ -11,11 +11,16 @@
 	}
 }
 
+
 @media only screen and ( max-width: 1199px ) {
 	.mail-chimp .flat-social {
 		padding-left: 0px;
 	}
-
+	.search-mechanics {
+		width: auto;
+		margin-left: -3em !important;
+		margin-top: 6em !important;
+	}
 	.instagram-wrap.col5 .instagram_badge_image {
 		width: 33.33%;
 		margin-bottom: 20px;
