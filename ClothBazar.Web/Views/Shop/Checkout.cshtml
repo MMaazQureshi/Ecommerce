@@ -17,10 +17,15 @@
 
 							<li class="list-group-item d-flex justify-content-between lh-condensed" data-id="@product.ID">
 								<div>
-									<h6 class="my-0">@i - @product.Name - Qty: @productQuantity</h6>
+                                    <div>
+                                        <h6 class="my-0">@i - @product.Name </h6>
+                                        <h6 class="my-0">quantity </h6>
+                                        @Html.EditorFor(model => productQuantity, new { htmlAttributes = new { @type = "number", @min = "0", id = "quantity" } })
+                                    </div>
 									<small class="text-muted">@(product.Description.Length > 100 ? product.Description.Substring(0, 99) : product.Description)</small>
 								</div>
-								<span class="text-muted">Unit Price: $ @product.Price - Total Price: @(productQuantity * product.Price)</span>
+								<input hidden id="unit-price" value="@product.Price">
+								<span class="text-muted">Unit Price: $ @product.Price -Total Price:<span class="total-price"> @(productQuantity * product.Price)</span> </span>
 							</li>
 
 							i++;
@@ -28,7 +33,7 @@
 
 						<li class="list-group-item d-flex justify-content-between">
 							<span>Total (USD)</span>
-							<strong>$ @Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Where(productID => productID == x.ID).Count())</strong>
+							<strong class="total-price">$ @Model.CartProducts.Sum(x => x.Price * Model.CartProductIDs.Where(productID => productID == x.ID).Count())</strong>
 						</li>
 					</ul>
 				</div>
@@ -62,6 +67,10 @@
 
 
 	<script>
+        $("#quantity").on("change", function () {
+
+			$(".total-price").text("$"+$("#unit-price").val() * $("#quantity").val());
+        });
 	$("#placeOrderBtn").click(function () {
 		$.ajax({
 			url: '@Url.Action("PlaceOrder", "Shop")',
