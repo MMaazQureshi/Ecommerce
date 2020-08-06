@@ -3,11 +3,12 @@
     ViewBag.Title = "AdminPanel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="height:300px; align-content:center;padding:30px;" >
+    
+<div style="min-height:300px; align-content:center;padding:30px;" >
     <h2 style="text-align:center">AdminPanel</h2>
     <br>
     <br>
-    <div style="height:300px; padding-left:160px; align-content:center">
+    <div id="adminpanel" style="text-align:center; align-content:center; width:auto;">
 
         @Html.ActionLink("Manage Categories", "Index", "Category", null, new { @class = "btn btn-default btn-lg" })|
         @Html.ActionLink("Manage Products", "Index", "Product", null, new { @class = "btn btn-default btn-lg" })|

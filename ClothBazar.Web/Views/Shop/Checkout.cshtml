@@ -75,7 +75,8 @@
 		$.ajax({
 			url: '@Url.Action("PlaceOrder", "Shop")',
 			data: {
-				productIDs: '@string.Join("-", Model.CartProductIDs)'
+				productIDs: '@string.Join("-", Model.CartProductIDs)',
+
 			}
 		})
         .done(function (response) {
